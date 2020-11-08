@@ -1,5 +1,10 @@
 # Comparison of Indexes for PMem
 
+## Build Essentials
+1. Install Build Essentials
+
+   `sudo apt-get install build-essential`
+
 ## Install PMDK on Ubuntu 18.04
 1. Install NDCTL - https://docs.pmem.io/persistent-memory/getting-started-guide/installing-ndctl#installing-ndctl-packages-on-linux
     `sudo apt-get install libndctl-dev libndctl6 ndctl`
@@ -14,6 +19,8 @@
 
     * All Debug:
 `sudo apt-get install libpmem1-debug librpmem1-debug libpmemblk1-debug libpmemlog1-debug libpmemobj1-debug libpmempool1-debug`
+
+3.  `sudo apt-get install libnuma-dev`
 
 ## Build BzTree
 1. Install latest CMake
