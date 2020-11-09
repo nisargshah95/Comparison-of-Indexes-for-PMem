@@ -22,6 +22,9 @@
 
 3.  `sudo apt-get install libnuma-dev`
 
+## Setup PMem
+https://docs.pmem.io/persistent-memory/getting-started-guide/creating-development-environments/linux-environments/linux-memmap
+
 ## Build BzTree
 1. Install latest CMake
 ```
@@ -47,9 +50,23 @@ mkdir build && cd build
 cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DPMEM_BACKEND=PMDK -DGOOGLE_FRAMEWORK=0 -DBUILD_TESTS=0 ..
 make
 ```
-    If make fails, open `pmwcas/src/PMWCAS/CMakeLists.txt` from the build directory:
-    Line 270 - Change to `set(PMDK_LIB_PATH "/usr/lib/x86_64-linux-gnu" CACHE STRING "PMDK lib install path")`
+&nbsp;&nbsp;&nbsp;&nbsp;If make fails, open `pmwcas/src/PMWCAS/CMakeLists.txt` from the build directory:
+
+&nbsp;&nbsp;&nbsp;&nbsp;Line 270 - Change to `set(PMDK_LIB_PATH "/usr/lib/x86_64-linux-gnu" CACHE STRING "PMDK lib install path")`
 ```
 rm -rf pmwcas/src/PMWCAS-build/*
 make
+```
+
+Recompile PMwCAS library to properly link dependencies:
+```
+cd ~/bztree/build/pmwcas/src/PMWCAS-build
+rm -rf libpmwcas.so
+/usr/bin/c++ -fPIC  -std=c++11 -O2 -g -DNDEBUG -shared -Wl,-soname,libpmwcas.so -o libpmwcas.so CMakeFiles/pmwcas.dir/src/util/nvram.cc.o CMakeFiles/pmwcas.dir/src/util/status.cc.o CMakeFiles/pmwcas.dir/src/environment/environment.cc.o CMakeFiles/pmwcas.dir/src/common/allocator_internal.cc.o CMakeFiles/pmwcas.dir/src/common/pmwcas_internal.cc.o CMakeFiles/pmwcas.dir/src/common/environment_internal.cc.o CMakeFiles/pmwcas.dir/src/common/epoch.cc.o CMakeFiles/pmwcas.dir/src/mwcas/mwcas.cc.o CMakeFiles/pmwcas.dir/src/environment/environment_linux.cc.o  /usr/lib/x86_64-linux-gnu/libpmemobj.so -lpthread -lnuma -lrt
+```
+
+Run PiBench using the wrapper:
+
+```
+sudo ./_deps/pibench-src/build/src/PiBench --input ./libbztree_pibench_wrapper.so --pool_path=/pmem/pool --pool_size=4294967296
 ```
