@@ -70,3 +70,14 @@ Run PiBench using the wrapper:
 ```
 sudo ./_deps/pibench-src/build/src/PiBench --input ./libbztree_pibench_wrapper.so --pool_path=/pmem/pool --pool_size=4294967296
 ```
+
+## Build lbtree
+```
+git clone https://github.com/schencoding/lbtree
+cd lbtree
+dd if=/dev/zero of=/pmem/lbtree bs=1048576 count=2048
+```
+On line 59 of common/nvm-common.h, replace `clwb` with `clflush`. `clwb` instruction is not supported on some older processors.
+```
+make
+```
