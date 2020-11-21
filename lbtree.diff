@@ -1,0 +1,387 @@
+diff --git a/Makefile b/Makefile
+index 1a5280e..bde6b28 100644
+--- a/Makefile
++++ b/Makefile
+@@ -5,15 +5,20 @@ CC=g++
+ 
+ # Flag for test runs
+ CFLAGS=-O3 -std=c++11 -pthread -mrtm -msse4.1 -mavx2
++#CFLAGS_LBTREE=-O3 -std=c++11 -pthread -mrtm -msse4.1 -mavx2 -fpic
++CFLAGS_LBTREE=-O0 -g -std=c++11 -pthread -mrtm -msse4.1 -mavx2 -fpic
+ 
+ INCLUDE=-I./common
++PIBENCH_WRAPPER_INCLUDE=-I${PIBENCH_DIR}/include
++
+ LIB=-lpmem
++PIBENCH_WRAPPER_LIB=-L./ -llbtree
+ 
+ COMMON_DEPENDS= ./common/tree.h ./common/tree.cc ./common/keyinput.h ./common/mempool.h ./common/mempool.cc ./common/nodepref.h ./common/nvm-common.h ./common/nvm-common.cc ./common/performance.h
+ COMMON_SOURCES= ./common/tree.cc ./common/mempool.cc ./common/nvm-common.cc
+ 
+ # -----------------------------------------------------------------------------
+-TARGETS=lbtree 
++TARGETS=liblbtree_pibench_wrapper.so
+ 
+ #wbtree fptree
+ 
+@@ -21,8 +26,11 @@ all: ${TARGETS}
+ 
+ # -----------------------------------------------------------------------------
+ 
+-lbtree: lbtree-src/lbtree.h lbtree-src/lbtree.cc ${COMMON_DEPENDS}
+-	${CC} -o $@ ${CFLAGS} ${INCLUDE} lbtree-src/lbtree.cc ${COMMON_SOURCES} ${LIB}
++liblbtree.so: lbtree-src/lbtree.h lbtree-src/lbtree.cc ${COMMON_DEPENDS}
++	${CC} -shared -o $@ ${CFLAGS_LBTREE} ${INCLUDE} lbtree-src/lbtree.cc ${COMMON_SOURCES} ${LIB}
++
++liblbtree_pibench_wrapper.so: liblbtree.so pibench-wrapper/wrapper.h pibench-wrapper/wrapper.cc
++	${CC} -shared -o $@ ${CFLAGS_LBTREE} ${INCLUDE} ${PIBENCH_WRAPPER_INCLUDE} pibench-wrapper/wrapper.cc ${PIBENCH_WRAPPER_LIB}
+ 
+ fptree: fptree-src/fptree.h fptree-src/fptree.cc ${COMMON_DEPENDS}
+ 	${CC} -o $@ ${CFLAGS} ${INCLUDE} fptree-src/fptree.cc ${COMMON_SOURCES} ${LIB}
+@@ -32,4 +40,4 @@ wbtree: wbtree-src/wbtree.h wbtree-src/wbtree.cc ${COMMON_DEPENDS}
+ 
+ # -----------------------------------------------------------------------------
+ clean:
+-	-rm -rf a.out core *.s ${TARGETS}
++	-rm -rf a.out core *.s *.so
+diff --git a/common/nvm-common.h b/common/nvm-common.h
+index 73c944d..2bdb5ab 100644
+--- a/common/nvm-common.h
++++ b/common/nvm-common.h
+@@ -56,7 +56,7 @@
+  */
+ static inline
+ void clwb(void * addr)
+-{ asm volatile("clwb %0": :"m"(*((char *)addr))); } 
++{ asm volatile("clflush %0": :"m"(*((char *)addr))); }
+ 
+ /**
+  * flush [start, end]
+diff --git a/common/tree.cc b/common/tree.cc
+index cb1758e..6bebbd4 100644
+--- a/common/tree.cc
++++ b/common/tree.cc
+@@ -150,7 +150,7 @@ static inline int insertTest(Int64 key[], int start, int end)
+ 
+        for (int ii=start; ii<end; ii++) {
+           key_type kk= key[ii];
+-          the_treep->insert (kk, (void *) kk);
++          //the_treep->insert (kk, (void *) kk);
+        } // end of for
+ 
+        if (debug_test) {
+@@ -165,6 +165,7 @@ static inline int insertTest(Int64 key[], int start, int end)
+        return found;
+ }
+ 
++
+ /**
+  * The test run for deletion operations
+  */
+@@ -458,7 +459,7 @@ int parse_command (int argc, char **argv)
+                                ? start+keys_per_thread : keynum);
+                      for (int ii=start; ii<end; ii++) {
+                         key_type kk= input->keys[2*ii+1];
+-                        the_treep->insert (kk, (void *) kk);
++                        //the_treep->insert (kk, (void *) kk);
+ 		     }
+ 		});
+ 	    }
+@@ -515,7 +516,7 @@ int parse_command (int argc, char **argv)
+                                ? start+keys_per_thread : keynum);
+                      for (int ii=start; ii<end; ii++) {
+                         key_type kk= input->keys[2*ii];
+-                        the_treep->insert (kk, (void *) kk);
++                        //the_treep->insert (kk, (void *) kk);
+ 		     }
+ 		});
+ 	    }
+@@ -536,7 +537,7 @@ int parse_command (int argc, char **argv)
+                                ? start+keys_per_thread : keynum);
+                      for (int ii=start; ii<end; ii++) {
+                         key_type kk= input->keys[2*ii];
+-                        the_treep->insert (kk, (void *) kk);
++                        //the_treep->insert (kk, (void *) kk);
+ 		     }
+ 		});
+ 	    }
+@@ -779,7 +780,7 @@ int parse_command (int argc, char **argv)
+                      keyInput *cursor= input->openCursor(start, end-start);
+                      for (int ii=start; ii<end; ii++) {
+                         key_type kk= cursor->get_key(ii);
+-                        the_treep->insert (kk, (void *) kk);
++                        //the_treep->insert (kk, (void *) kk);
+                      }
+                      input->closeCursor(cursor);
+                 });
+@@ -1001,4 +1002,3 @@ int parse_command (int argc, char **argv)
+ 
+ 	return 0;
+ }
+-
+diff --git a/common/tree.h b/common/tree.h
+index b8bc9c4..5f85e7b 100644
+--- a/common/tree.h
++++ b/common/tree.h
+@@ -165,7 +165,7 @@ class tree {
+    * @param key   the index key
+    * @param ptr   the record pointer
+    */
+-   virtual void insert (key_type key, void * ptr)
++   virtual void insert (key_type key, const void * ptr)
+    {
+        fprintf (stderr, "Not implemented!\n");
+        exit (1);
+diff --git a/lbtree-src/lbtree.cc b/lbtree-src/lbtree.cc
+index a89c854..be8d44a 100644
+--- a/lbtree-src/lbtree.cc
++++ b/lbtree-src/lbtree.cc
+@@ -18,35 +18,6 @@
+ 
+ #include "lbtree.h"
+ 
+-/* ----------------------------------------------------------------- *
+- useful structure
+- * ----------------------------------------------------------------- */
+-static int last_slot_in_line[LEAF_KEY_NUM];
+-
+-static void initUseful(void)
+-{
+-    // line 0
+-    last_slot_in_line[0]= 2;
+-    last_slot_in_line[1]= 2;
+-    last_slot_in_line[2]= 2;
+-
+-    // line 1
+-    last_slot_in_line[3]= 6;
+-    last_slot_in_line[4]= 6;
+-    last_slot_in_line[5]= 6;
+-    last_slot_in_line[6]= 6;
+-
+-    // line 2
+-    last_slot_in_line[7]= 10;
+-    last_slot_in_line[8]= 10;
+-    last_slot_in_line[9]= 10;
+-    last_slot_in_line[10]=10;
+-
+-    // line 3
+-    last_slot_in_line[11]=13;
+-    last_slot_in_line[12]=13;
+-    last_slot_in_line[13]=13;
+-}
+ 
+ /* ----------------------------------------------------------------- *
+  bulk load
+@@ -588,7 +559,7 @@ void lbtree::qsortBleaf(bleaf *p, int start, int end, int pos[])
+  
+  * ---------------------------------------------------------- */
+ 
+-void lbtree::insert (key_type key, void *ptr)
++void lbtree::insert (key_type key, const void *ptr)
+ {
+     // record the path from root to leaf
+     // parray[level] is a node on the path
+@@ -611,7 +582,7 @@ Again2:
+     // 1. RTM begin
+     if(_xbegin() != _XBEGIN_STARTED) {
+         // random backoff
+-        // sum= 0; 
++        // sum= 0;
+         // for (int i=(rdtsc() % 1024); i>0; i--) sum += i;
+         goto Again2;
+     }
+@@ -1465,13 +1436,13 @@ tree * initTree(void *nvm_addr, bool recover)
+     return mytree;
+ }
+ 
+-int main (int argc, char *argv[])
+-{
+-    printf("NON_LEAF_KEY_NUM= %d, LEAF_KEY_NUM= %d, nonleaf size= %lu, leaf size= %lu\n",
+-           NON_LEAF_KEY_NUM, LEAF_KEY_NUM, sizeof(bnode), sizeof(bleaf));
+-    assert((sizeof(bnode) == NONLEAF_SIZE)&&(sizeof(bleaf) == LEAF_SIZE));
++// int main (int argc, char *argv[])
++// {
++//     printf("NON_LEAF_KEY_NUM= %d, LEAF_KEY_NUM= %d, nonleaf size= %lu, leaf size= %lu\n",
++//            NON_LEAF_KEY_NUM, LEAF_KEY_NUM, sizeof(bnode), sizeof(bleaf));
++//     assert((sizeof(bnode) == NONLEAF_SIZE)&&(sizeof(bleaf) == LEAF_SIZE));
+ 
+-    initUseful();
++//     initUseful();
+ 
+-    return parse_command (argc, argv);
+-}
++//     return parse_command (argc, argv);
++// }
+diff --git a/lbtree-src/lbtree.h b/lbtree-src/lbtree.h
+index db73755..9025d0b 100644
+--- a/lbtree-src/lbtree.h
++++ b/lbtree-src/lbtree.h
+@@ -36,6 +36,36 @@
+ 
+ #define LEAF_KEY_NUM        (14) 
+ 
++/* ----------------------------------------------------------------- *
++ useful structure
++ * ----------------------------------------------------------------- */
++static int last_slot_in_line[LEAF_KEY_NUM];
++
++static void initUseful(void)
++{
++    // line 0
++    last_slot_in_line[0]= 2;
++    last_slot_in_line[1]= 2;
++    last_slot_in_line[2]= 2;
++
++    // line 1
++    last_slot_in_line[3]= 6;
++    last_slot_in_line[4]= 6;
++    last_slot_in_line[5]= 6;
++    last_slot_in_line[6]= 6;
++
++    // line 2
++    last_slot_in_line[7]= 10;
++    last_slot_in_line[8]= 10;
++    last_slot_in_line[9]= 10;
++    last_slot_in_line[10]=10;
++
++    // line 3
++    last_slot_in_line[11]=13;
++    last_slot_in_line[12]=13;
++    last_slot_in_line[13]=13;
++}
++
+ /* ---------------------------------------------------------------------- */
+ /**
+  * Pointer8B defines a class that can be assigned to either bnode or bleaf.
+@@ -203,7 +233,7 @@ class treeMeta {
+ 
+ class lbtree: public tree {
+   public:  // root and level
+-    
++
+     treeMeta * tree_meta;
+     
+   public:
+@@ -255,7 +285,7 @@ class lbtree: public tree {
+     }
+ 
+     // insert (key, ptr)
+-    void insert (key_type key, void *ptr);
++    void insert (key_type key, const void *ptr);
+     
+     // delete key
+     void del (key_type key);
+diff --git a/pibench-wrapper/wrapper.cc b/pibench-wrapper/wrapper.cc
+new file mode 100644
+index 0000000..a66078c
+--- /dev/null
++++ b/pibench-wrapper/wrapper.cc
+@@ -0,0 +1,70 @@
++#include "wrapper.h"
++
++
++extern "C" tree_api *create_tree(const tree_options_t &opt) {
++    return new lbtree_wrapper(opt);
++}
++
++lbtree_wrapper::lbtree_wrapper(const tree_options_t &opt) {
++    initUseful(); // as called from main() in lbtree.cc
++    worker_id = 0; // the main thread will use worker[0]'s mem/nvm pool
++    worker_thread_num = opt.num_threads;
++
++    // assume mempool size is same as nvmpool size, although they can be different
++    the_thread_mempools.init(opt.num_threads, opt.pool_size, 4096);
++    the_thread_nvmpools.init(opt.num_threads, opt.pool_path.c_str(), opt.pool_size);
++
++    // allocate a 4KB page for the tree in worker 0's pool
++    char *nvm_addr= (char *)nvmpool_alloc(4096);
++    tree_ = new lbtree(nvm_addr, false);
++
++    bufferedKeyInput *input = new bufferedKeyInput("/mnt/sda4/lbtree/keygen-8B/dbg-k50k", 0, 1);
++    tree_->bulkload(1, input, 1.0);
++}
++
++lbtree_wrapper::~lbtree_wrapper() {
++    delete tree_;
++}
++
++bool lbtree_wrapper::find(const char *key, size_t key_sz, char *value_out) {
++    // std::cout << "lookup " << key;
++    int pos;
++    std::string key_str(key);
++    long long key_ll = (long long) str_hash(key_str);
++    // std::cout << " converted to " << key_ll << std::endl;
++    void *p = tree_->lookup(key_ll, &pos);
++
++    // void *recptr = tree_->get_recptr(p, pos);
++    // TODO: Populate value_out
++    return pos >= 0; // valid position within the leaf node
++}
++
++bool lbtree_wrapper::insert(const char *key, size_t key_sz, const char *value, size_t value_sz) {
++    // std::cout << "inserting " << key;
++    std::string key_str(key);
++    long long key_ll = (long long) str_hash(key_str);
++    // std::cout << " converted to " << key_ll << std::endl;
++    tree_->insert(key_ll, value);
++    return true;
++    // return find(key, key_sz, NULL);
++}
++
++bool lbtree_wrapper::update(const char *key, size_t key_sz, const char *value, size_t value_sz) {
++    // There is not explciit update method in lbtree
++    // Redirect to insert
++    return insert(key, key_sz, value, value_sz);
++}
++
++int lbtree_wrapper::scan(const char *key, size_t key_sz, int scan_sz, char *&values_out) {
++    // Operation not implemented in lbtree
++    return -1;
++}
++
++bool lbtree_wrapper::remove(const char *key, size_t key_sz) {
++    // key generated by pibench is already an integer, so we can convert it to long long
++    std::string key_str(key);
++    long long key_ll = (long long) str_hash(key_str);
++    tree_->del(key_ll);
++    // return !find(key, key_sz, NULL);
++    return true;
++}
+\ No newline at end of file
+diff --git a/pibench-wrapper/wrapper.h b/pibench-wrapper/wrapper.h
+new file mode 100644
+index 0000000..953a886
+--- /dev/null
++++ b/pibench-wrapper/wrapper.h
+@@ -0,0 +1,31 @@
++#pragma once
++// A wrapper for the lbtree
++
++
++#include <iostream>
++#include <string.h>
++#include <stdlib.h>
++
++#include "tree_api.hpp"
++#include "../lbtree-src/lbtree.h"
++#include "tree.h"
++#include "mempool.h" // initialize mem/nvm pools
++#include "keyinput.h" // bufferedKeyInput
++
++
++class lbtree_wrapper : public tree_api
++{
++public:
++    lbtree_wrapper(const tree_options_t &opt);
++    virtual ~lbtree_wrapper();
++
++    virtual bool find(const char *key, size_t key_sz, char *value_out) override;
++    virtual bool insert(const char *key, size_t key_sz, const char *value, size_t value_sz) override;
++    virtual bool update(const char *key, size_t key_sz, const char *value, size_t value_sz) override;
++    virtual bool remove(const char *key, size_t key_sz) override;
++    virtual int scan(const char *key, size_t key_sz, int scan_sz, char *&values_out) override;
++
++private:
++    tree *tree_;
++    std::hash<std::string> str_hash;
++};
