@@ -81,3 +81,15 @@ On line 59 of common/nvm-common.h, replace `clwb` with `clflush`. `clwb` instruc
 ```
 make
 ```
+### Build and run lbtree pibench wrapper
+Run the following commands from lbtree directory:
+```
+cd /mnt/sda4/lbtree
+
+# Compile lbtree wrapper (will also compile lbtree if not already done)
+make PIBENCH_DIR=/root/bztree/build/_deps/pibench-src/ -j
+
+# Run pibench
+rm -rf /pmem/lbtree
+LD_LIBRARY_PATH=./ /root/bztree/build/_deps/pibench-src/build/src/PiBench --input ./liblbtree_pibench_wrapper.so --pool_path=/pmem/lbtree --pool_size=1073741824 --scan_size 1 -n 1000000 -p 1000000
+```
