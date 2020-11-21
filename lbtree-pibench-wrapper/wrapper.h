@@ -1,6 +1,7 @@
 #pragma once
 // A wrapper for the lbtree
 
+
 #include <iostream>
 #include <string.h>
 #include <stdlib.h>
@@ -8,7 +9,8 @@
 #include "tree_api.hpp"
 #include "../lbtree-src/lbtree.h"
 #include "tree.h"
-#include "mempool.h"
+#include "mempool.h" // initialize mem/nvm pools
+#include "keyinput.h" // bufferedKeyInput
 
 
 class lbtree_wrapper : public tree_api
@@ -25,4 +27,5 @@ public:
 
 private:
     tree *tree_;
+    std::hash<std::string> str_hash;
 };
