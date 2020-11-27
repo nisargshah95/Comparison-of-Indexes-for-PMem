@@ -1,0 +1,26 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 02f3fa0..1f0508c 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -32,6 +32,8 @@ ExternalProject_Add(PMDK
+         )
+
+ include_directories(${PMDK_PREFIX}/src/PMDK/src/include)
++include_directories(/root/bztree/build/_deps/pibench-src/include)
++
+ if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+   link_directories(${PMDK_PREFIX}/src/PMDK/src/debug)
+ else ()
+@@ -64,9 +66,12 @@ endif ()
+ if (USE_PMEM MATCHES "ON")
+   add_executable(test_pmem src/test_pmem.cpp)
+   add_executable(example src/example.cpp)
++  add_library(dash_wrapper SHARED src/dash_wrapper.cc)
+   target_link_libraries(test_pmem PRIVATE ${libs_to_link})
+   target_link_libraries(example PRIVATE ${libs_to_link})
++  target_link_libraries(dash_wrapper PRIVATE ${libs_to_link})
+   add_dependencies(test_pmem PMDK)
+   add_dependencies(example PMDK)
++  add_dependencies(dash_wrapper PMDK)
+ else ()
+ endif ()

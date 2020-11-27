@@ -93,3 +93,25 @@ make PIBENCH_DIR=/root/bztree/build/_deps/pibench-src/ -j
 rm -rf /pmem/lbtree
 LD_LIBRARY_PATH=./ /root/bztree/build/_deps/pibench-src/build/src/PiBench --input ./liblbtree_pibench_wrapper.so --pool_path=/pmem/lbtree --pool_size=1073741824 --scan_size 1 -n 1000000 -p 1000000
 ```
+
+## Build dash
+```
+git clone https://github.com/baotonglu/dash.git
+cd dash
+mkdir build && cd build
+cmake -DCMAKE_BUILD_TYPE=Release -DUSE_PMEM=ON ..
+make -j
+```
+
+### Build and run dash pibench wrapper
+To compile dash wrapper, include dash pibench wrapper files (.cc and .h) in the src directory and make the changes in CMakeLists.txt as shown in dash.diff file.
+```
+cmake -DCMAKE_BUILD_TYPE=Release -DUSE_PMEM=ON ..
+make -j
+```
+
+To run PiBench using the wrapper:
+```
+rm -rf /pmem/lbtree
+LD_LIBRARY_PATH=./ /root/bztree/build/_deps/pibench-src/build/src/PiBench --input ./libdash_wrapper.so --pool_path=/pmem/dash --pool_size=1073741824 --scan_size 1 -n 100 -p 1000000
+```
