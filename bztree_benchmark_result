@@ -271,6 +271,58 @@ Latencies (10000000 operations observed):
 		
 
 2) threads 8
+root@node-0:~/bztree/build# sudo ./_deps/pibench-src/build/src/PiBench --input ./libbztree_pibench_wrapper.so --pool_path=/pmem/pool --pool_size=4294967296 --latency_sampling=1.0 -n 100000 -p 100000 -i 0.5 -r 0.
+5 -t 8
+Environment:
+        Time: Thu Nov 26 17:40:59 2020
+        CPU: 20 * Intel(R) Xeon(R) CPU E5-2640 v4 @ 2.40GHz
+        CPU Cache: 25600 KB
+        Kernel: Linux 5.4.0-53-generic
+Benchmark Options:
+        Target: ./libbztree_pibench_wrapper.so
+        # Records: 100000
+        # Operations: 100000
+        # Threads: 8
+        Sampling: 1000 ms
+        Latency: 1
+        Key prefix:
+        Key size: 8
+        Value size: 8
+        Random seed: 1729
+        Key distribution: UNIFORM
+        Scan size: 100
+        Operations ratio:
+                Read: 0.5
+                Insert: 0.5
+                Update: 0
+                Delete: 0
+                Scan: 0
+creating new tree on pool.
+IBRS and IBPB supported  : yes
+STIBP supported          : yes
+Spec arch caps supported : no
+Number of physical cores: 10
+Number of logical cores: 20
+Number of online logical cores: 20
+Threads (logical cores) per physical core: 2
+Num sockets: 1
+Physical cores per socket: 10
+Core PMU (perfmon) version: 3
+Number of core PMU generic (programmable) counters: 4
+Width of generic (programmable) counters: 48 bits
+Number of core PMU fixed counters: 3
+Width of fixed counters: 48 bits
+Nominal core frequency: 2400000000 Hz
+IBRS enabled in the kernel   : no
+STIBP enabled in the kernel  : no
+Package thermal spec power: 90 Watt; Package minimum power: 40 Watt; Package maximum power: 180 Watt;
+Socket 0: 2 memory controllers detected with total number of 5 channels. 0 QPI ports detected. 0 M2M (mesh to memory) blocks detected.
+Trying to use Linux perf events...
+Successfully programmed on-core PMU using Linux perf
+Overview:
+        Load time: 364.402 milliseconds
+PiBench: /root/bztree/build/_deps/pibench-src/src/benchmark.cpp:259: void PiBench::benchmark_t::run(): Assertion `r' failed.
+Aborted
 	
 	
 	
