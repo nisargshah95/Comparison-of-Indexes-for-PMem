@@ -271,59 +271,96 @@ Latencies (10000000 operations observed):
 		
 
 2) threads 8
-root@node-0:~/bztree/build# sudo ./_deps/pibench-src/build/src/PiBench --input ./libbztree_pibench_wrapper.so --pool_path=/pmem/pool --pool_size=4294967296 --latency_sampling=1.0 -n 100000 -p 100000 -i 0.5 -r 0.
-5 -t 8
-Environment:
-        Time: Thu Nov 26 17:40:59 2020
-        CPU: 20 * Intel(R) Xeon(R) CPU E5-2640 v4 @ 2.40GHz
-        CPU Cache: 25600 KB
-        Kernel: Linux 5.4.0-53-generic
-Benchmark Options:
-        Target: ./libbztree_pibench_wrapper.so
-        # Records: 100000
-        # Operations: 100000
-        # Threads: 8
-        Sampling: 1000 ms
-        Latency: 1
-        Key prefix:
-        Key size: 8
-        Value size: 8
-        Random seed: 1729
-        Key distribution: UNIFORM
-        Scan size: 100
-        Operations ratio:
-                Read: 0.5
-                Insert: 0.5
-                Update: 0
-                Delete: 0
-                Scan: 0
-creating new tree on pool.
-IBRS and IBPB supported  : yes
-STIBP supported          : yes
-Spec arch caps supported : no
-Number of physical cores: 10
-Number of logical cores: 20
-Number of online logical cores: 20
-Threads (logical cores) per physical core: 2
-Num sockets: 1
-Physical cores per socket: 10
-Core PMU (perfmon) version: 3
-Number of core PMU generic (programmable) counters: 4
-Width of generic (programmable) counters: 48 bits
-Number of core PMU fixed counters: 3
-Width of fixed counters: 48 bits
-Nominal core frequency: 2400000000 Hz
-IBRS enabled in the kernel   : no
-STIBP enabled in the kernel  : no
-Package thermal spec power: 90 Watt; Package minimum power: 40 Watt; Package maximum power: 180 Watt;
-Socket 0: 2 memory controllers detected with total number of 5 channels. 0 QPI ports detected. 0 M2M (mesh to memory) blocks detected.
-Trying to use Linux perf events...
+Overview:
+        Load time: 37615.4 milliseconds
+        Run time: 4025.2839 milliseconds
+        Throughput: 2484297.0000 ops/s
+        Failed lookups: 817544
+        Failed inserts: 36155
+PCM Metrics:
+        L3 misses: 536339201
+        DRAM Reads (bytes): 42871683456
+        DRAM Writes (bytes): 8949540864
+        NVM Reads (bytes): 0
+        NVM Writes (bytes): 0
+Latencies (10000000 operations observed):
+        min: 449
+        50%: 3281
+        90%: 3907
+        99%: 24313
+        99.9%: 26979
+        99.99%: 230215
+        99.999%: 746016
+        max: 1934783
+	
+3) threads 16
 Successfully programmed on-core PMU using Linux perf
 Overview:
-        Load time: 364.402 milliseconds
-PiBench: /root/bztree/build/_deps/pibench-src/src/benchmark.cpp:259: void PiBench::benchmark_t::run(): Assertion `r' failed.
-Aborted
-	
-	
-	
+        Load time: 37382.4 milliseconds
+        Run time: 2690.4231 milliseconds
+        Throughput: 3716887.7500 ops/s
+        Failed lookups: 817186
+        Failed inserts: 41040
+PCM Metrics:
+        L3 misses: 535472504
+        DRAM Reads (bytes): 41577376768
+        DRAM Writes (bytes): 8924114304
+        NVM Reads (bytes): 0
+        NVM Writes (bytes): 0
+Latencies (10000000 operations observed):
+        min: 421
+        50%: 3146
+        90%: 4787
+        99%: 32311
+        99.9%: 35386
+        99.99%: 418067
+        99.999%: 756065
+        max: 4109633
+4) threads 32
+
+	Successfully programmed on-core PMU using Linux perf
+Overview:
+        Load time: 37480.7 milliseconds
+        Run time: 2941.9080 milliseconds
+        Throughput: 3399154.7500 ops/s
+        Failed lookups: 814946
+        Failed inserts: 50251
+PCM Metrics:
+        L3 misses: 528646963
+        DRAM Reads (bytes): 39413861696
+        DRAM Writes (bytes): 9044804160
+        NVM Reads (bytes): 0
+        NVM Writes (bytes): 0
+Latencies (10000000 operations observed):
+        min: 450
+        50%: 3109
+        90%: 4890
+        99%: 33427
+        99.9%: 44655
+        99.99%: 16016641
+        99.999%: 32830078
+        max: 61793863
+
+5) threads 64
+Overview:
+        Load time: 37485 milliseconds
+        Run time: 7193.7139 milliseconds
+        Throughput: 1390102.6250 ops/s
+        Failed lookups: 814701
+        Failed inserts: 53487
+PCM Metrics:
+        L3 misses: 564361944
+        DRAM Reads (bytes): 41677962560
+        DRAM Writes (bytes): 9180372672
+        NVM Reads (bytes): 0
+        NVM Writes (bytes): 0
+Latencies (10000000 operations observed):
+        min: 457
+        50%: 3044
+        90%: 4711
+        99%: 32618
+        99.9%: 14206604
+        99.99%: 67860526
+        99.999%: 104129323
+        max: 167821131
 	
