@@ -25,8 +25,62 @@ Latencies (10000000 operations observed):
         99.99%: 2519
         99.999%: 15339
         max: 230241
+	
+2) Threads 2
+Overview:
+        Load time: 4959.9 milliseconds
+        Run time: 2977.3262 milliseconds
+        Throughput: 3358718.2500 ops/s
+        Failed lookups: 0
+        Failed inserts: 0
+PCM Metrics:
+        L3 misses: 49299644
+        DRAM Reads (bytes): 3320063360
+        DRAM Writes (bytes): 188763008
+        NVM Reads (bytes): 0
+        NVM Writes (bytes): 0
+Samples:
+        3345228
+        3370383
+        3284389
+Latencies (10000000 operations observed):
+        min: 124
+        50%: 238
+        90%: 304
+        99%: 578
+        99.9%: 686
+        99.99%: 14957
+        99.999%: 16484
+        max: 315702
+	
+3) Threads 4
+Overview:
+        Load time: 4951.65 milliseconds
+        Run time: 1607.9642 milliseconds
+        Throughput: 6219043.5000 ops/s
+        Failed lookups: 0
+        Failed inserts: 0
+PCM Metrics:
+        L3 misses: 48534499
+        DRAM Reads (bytes): 3268676992
+        DRAM Writes (bytes): 186895872
+        NVM Reads (bytes): 0
+        NVM Writes (bytes): 0
+Samples:
+        6209054
+        3790946
+Latencies (10000000 operations observed):
+        min: 137
+        50%: 257
+        90%: 329
+        99%: 604
+        99.9%: 709
+        99.99%: 3059
+        99.999%: 16040
+        max: 230696
 
-2) Threads 8
+
+4) Threads 8
 Overview:
         Load time: 2564.4 milliseconds
         Run time: 912.4092 milliseconds
@@ -51,7 +105,7 @@ Latencies (10000000 operations observed):
         99.999%: 16914
         max: 226408
 
-3) Threads 16
+5) Threads 16
 Overview:
         Load time: 2562.89 milliseconds
         Run time: 708.2430 milliseconds
@@ -76,7 +130,7 @@ Latencies (10000000 operations observed):
         99.999%: 16608
         max: 423606
 
-4) Threads 32
+6) Threads 32
 Overview:
         Load time: 2549.68 milliseconds
         Run time: 628.5750 milliseconds
@@ -101,7 +155,7 @@ Latencies (10000000 operations observed):
         99.999%: 16006755
         max: 47801888
 
-5) Threads 64
+7) Threads 64
 Overview:
         Load time: 2549.63 milliseconds
         Run time: 590.6600 milliseconds
@@ -128,6 +182,7 @@ Latencies (10000000 operations observed):
 		
 
 10% write and 90% read
+
 1) Threads 1
 Overview:
         Load time: 2567.1 milliseconds
@@ -157,8 +212,61 @@ Latencies (10000000 operations observed):
         99.99%: 2523
         99.999%: 15460
         max: 279053
+
+2) Threads 2
+Overview:
+        Load time: 4961.06 milliseconds
+        Run time: 3054.9609 milliseconds
+        Throughput: 3273364.2500 ops/s
+        Failed lookups: 450918
+        Failed inserts: 7007
+PCM Metrics:
+        L3 misses: 46933061
+        DRAM Reads (bytes): 3236269248
+        DRAM Writes (bytes): 359043264
+        NVM Reads (bytes): 0
+        NVM Writes (bytes): 0
+Samples:
+        3263295
+        3283103
+        3280041
+        173561
+Latencies (10000000 operations observed):
+        min: 125
+        50%: 242
+        90%: 387
+        99%: 599
+        99.9%: 765
+        99.99%: 15069
+        99.999%: 16536
+        max: 237095
+3) Threads 4
+Overview:
+        Load time: 4956.75 milliseconds
+        Run time: 1654.2759 milliseconds
+        Throughput: 6044941.0000 ops/s
+        Failed lookups: 452100
+        Failed inserts: 7021
+PCM Metrics:
+        L3 misses: 46570413
+        DRAM Reads (bytes): 3214491584
+        DRAM Writes (bytes): 356759616
+        NVM Reads (bytes): 0
+        NVM Writes (bytes): 0
+Samples:
+        6049524
+        3950476
+Latencies (10000000 operations observed):
+        min: 138
+        50%: 260
+        90%: 414
+        99%: 622
+        99.9%: 798
+        99.99%: 15206
+        99.999%: 16361
+        max: 227661
 		
-2) Threads 8
+4) Threads 8
 Overview:
         Load time: 2551.68 milliseconds
         Run time: 919.9404 milliseconds
@@ -182,7 +290,7 @@ Latencies (10000000 operations observed):
         99.99%: 15449
         99.999%: 16986
         max: 287422
-3) Threads 16
+5) Threads 16
 Overview:
         Load time: 2548.23 milliseconds
         Run time: 711.8423 milliseconds
@@ -207,7 +315,7 @@ Latencies (10000000 operations observed):
         99.999%: 16427
         max: 617547
 
-4) Threads 32
+6) Threads 32
 Overview:
         Load time: 2562.42 milliseconds
         Run time: 629.9912 milliseconds
@@ -232,7 +340,7 @@ Latencies (10000000 operations observed):
         99.999%: 16008754
         max: 40009850
 
-5) Threads 64
+7) Threads 64
 Overview:
         Load time: 2558.47 milliseconds
         Run time: 594.6851 milliseconds
@@ -291,8 +399,66 @@ Latencies (10000000 operations observed):
         99.99%: 51687
         99.999%: 264041
         max: 1711542
+
+2) threads 2
+Overview:
+        Load time: 4962.31 milliseconds
+Directory_Doubling towards 15
+        Run time: 3868.5732 milliseconds
+        Throughput: 2584932.2500 ops/s
+        Failed lookups: 812043
+        Failed inserts: 59294
+PCM Metrics:
+        L3 misses: 45486167
+        DRAM Reads (bytes): 3960477120
+        DRAM Writes (bytes): 1770435072
+        NVM Reads (bytes): 0
+        NVM Writes (bytes): 0
+Samples:
+        2917342
+        2876270
+        2435707
+        1770681
+Latencies (10000000 operations observed):
+        min: 126
+        50%: 334
+        90%: 446
+        99%: 734
+        99.9%: 50499
+        99.99%: 52829
+        99.999%: 273798
+        max: 1902638
+
+3) Threads 4
+Overview:
+        Load time: 4969.92 milliseconds
+Directory_Doubling towards 15
+        Run time: 2111.7822 milliseconds
+        Throughput: 4735336.5000 ops/s
+        Failed lookups: 811920
+        Failed inserts: 71316
+PCM Metrics:
+        L3 misses: 43424346
+        DRAM Reads (bytes): 3844105664
+        DRAM Writes (bytes): 1764343552
+        NVM Reads (bytes): 0
+        NVM Writes (bytes): 0
+Samples:
+        5368891
+        4245453
+        385656
+Latencies (10000000 operations observed):
+        min: 129
+        50%: 362
+        90%: 516
+        99%: 791
+        99.9%: 52765
+        99.99%: 56330
+        99.999%: 529681
+        max: 2343622
+
 	
-2) Threads 8
+4) Threads 8
 Overview:
         Load time: 2589.68 milliseconds
         Run time: 979.7275 milliseconds
@@ -317,7 +483,7 @@ Latencies (10000000 operations observed):
         99.999%: 17085
         max: 229854
 
-3) Threads 16
+4) Threads 16
 Overview:
         Load time: 2582.42 milliseconds
         Run time: 741.4012 milliseconds
@@ -342,7 +508,7 @@ Latencies (10000000 operations observed):
         99.999%: 16488
         max: 383522
 
-4) Threads 32
+6) Threads 32
 Overview:
         Load time: 2581.21 milliseconds
         Run time: 653.0106 milliseconds
@@ -367,7 +533,7 @@ Latencies (10000000 operations observed):
         99.999%: 16008010
         max: 39991444
 		
-5) Threads 64
+7) Threads 64
 Overview:
         Load time: 2581.52 milliseconds
         Run time: 626.0319 milliseconds
