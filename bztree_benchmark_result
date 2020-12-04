@@ -24,9 +24,13 @@ Latencies (10000000 operations observed):
         99.99%: 15986
         99.999%: 16538
         max: 311939
+
+2) Config: thread 2
+
+3) Config: thread 4
 		
 	
-2) Config:  thread 8
+4) Config:  thread 8
 		Overview:
         Load time: 37654 milliseconds
         Run time: 1620.1359 milliseconds
@@ -49,7 +53,7 @@ Latencies (10000000 operations observed):
         max: 230256
 
 
-3) threads : 16
+5) threads : 16
 
 Overview:
         Load time: 37359.7 milliseconds
@@ -72,7 +76,7 @@ Latencies (10000000 operations observed):
         99.999%: 185548
         max: 415684
 
-4) threads: 32
+6) threads: 32
 
 Overview:
         Load time: 37416.3 milliseconds
@@ -95,7 +99,7 @@ Latencies (10000000 operations observed):
         99.999%: 16016820
         max: 40018384
 		
-5) threads: 64
+7) threads: 64
 
 	Overview:
         Load time: 37365.3 milliseconds
@@ -145,8 +149,12 @@ Latencies (10000000 operations observed):
         99.99%: 28217
         99.999%: 235072
         max: 4661475
+2) thread 2
 
-2) thread 8
+3) thread 4
+
+
+4) thread 8
 	Overview:
         Load time: 37584.6 milliseconds
         Run time: 2147.7656 milliseconds
@@ -168,7 +176,7 @@ Latencies (10000000 operations observed):
         99.999%: 705184
         max: 1494349
 		
-3) threads 16
+5) threads 16
 
 	Overview:
         Load time: 37490.7 milliseconds
@@ -192,7 +200,7 @@ Latencies (10000000 operations observed):
         99.999%: 701119
         max: 2978806
 
-4) threads 32
+6) threads 32
 
 	Overview:
         Load time: 37361.3 milliseconds
@@ -215,7 +223,7 @@ Latencies (10000000 operations observed):
         99.999%: 16055680
         max: 43202056
 
-5) threads 64
+7) threads 64
 	
 	Overview:
         Load time: 37439.8 milliseconds
@@ -269,8 +277,11 @@ Latencies (10000000 operations observed):
         99.999%: 338350
         max: 5132603
 		
+2) thread 2
 
-2) threads 8
+3) thread 4
+
+4) threads 8
 Overview:
         Load time: 37615.4 milliseconds
         Run time: 4025.2839 milliseconds
@@ -293,7 +304,7 @@ Latencies (10000000 operations observed):
         99.999%: 746016
         max: 1934783
 	
-3) threads 16
+5) threads 16
 Successfully programmed on-core PMU using Linux perf
 Overview:
         Load time: 37382.4 milliseconds
@@ -316,7 +327,7 @@ Latencies (10000000 operations observed):
         99.99%: 418067
         99.999%: 756065
         max: 4109633
-4) threads 32
+6) threads 32
 
 	Successfully programmed on-core PMU using Linux perf
 Overview:
@@ -341,7 +352,7 @@ Latencies (10000000 operations observed):
         99.999%: 32830078
         max: 61793863
 
-5) threads 64
+7) threads 64
 Overview:
         Load time: 37485 milliseconds
         Run time: 7193.7139 milliseconds
