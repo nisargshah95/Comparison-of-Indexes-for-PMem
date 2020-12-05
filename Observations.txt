@@ -1,0 +1,5 @@
+* lb-tree read-only throughput does not scale. also seems less than read/write throughputs. lbtree is optimized for writes. can we reason about its read performance?
+* scale factor for all indexes reduces after 8 threads
+* dash has the highest throughput in all workloads.
+* In terms of P50 and P99 latencies, dash > lbtree > bztree.
+* bztree has unusually high tail (P99) latencies.
