@@ -2,165 +2,146 @@ n =  10000000
 p = 10000000
 
 100% Read
+100% Read
 1) Thread 1
 Overview:
-        Load time: 5539.74 milliseconds
-        Run time: 7682.7070 milliseconds
-        Throughput: 1301624.6250 ops/s
+        Load time: 5540.81 milliseconds
+        Run time: 7664.6382 milliseconds
+        Throughput: 1304693.0000 ops/s
         Failed lookups: 243270
         Failed inserts: 0
 PCM Metrics:
-        L3 misses: 64116438
-        DRAM Reads (bytes): 4276230464
-        DRAM Writes (bytes): 195931712
+        L3 misses: 63632263
+        DRAM Reads (bytes): 4245438272
+        DRAM Writes (bytes): 197115136
         NVM Reads (bytes): 0
         NVM Writes (bytes): 0
 Samples:
-        1290467
-        1303240
-        1304752
-        1303261
-        1303115
-        1303240
-        1303525
-        888400
+        1292659
+        1306863
+        1306538
+        1306533
+        1306032
+        1306858
+        1308098
+        866419
 Latencies (10000000 operations observed):
-        min: 170
-        50%: 434
-        90%: 493
-        99%: 779
-        99.9%: 877
-        99.99%: 4410
-        99.999%: 15828
-        max: 232076
+        min: 173
+        50%: 431
+        90%: 491
+        99%: 777
+        99.9%: 868
+        99.99%: 4419
+        99.999%: 15874
+        max: 278668
 
 2) Threads 2
 Overview:
-        Load time: 5557.6 milliseconds
-        Run time: 7703.1060 milliseconds
-        Throughput: 1298177.6250 ops/s
-        Failed lookups: 243270
+        Load time: 5533.41 milliseconds
+        Run time: 3920.9875 milliseconds
+        Throughput: 2550377.7500 ops/s
+        Failed lookups: 243633
         Failed inserts: 0
 PCM Metrics:
-        L3 misses: 65797727
-        DRAM Reads (bytes): 4384441728
-        DRAM Writes (bytes): 197507584
+        L3 misses: 63497902
+        DRAM Reads (bytes): 4230492864
+        DRAM Writes (bytes): 190379456
         NVM Reads (bytes): 0
         NVM Writes (bytes): 0
 Samples:
-        1288278
-        1299119
-        1301136
-        1299372
-        1301080
-        1299963
-        1300471
-        910581
+        2541788
+        2561933
+        2563208
+        2333071
 Latencies (10000000 operations observed):
-        min: 181
-        50%: 437
-        90%: 496
-        99%: 781
-        99.9%: 878
-        99.99%: 4342
-        99.999%: 15852
-        max: 287849
+        min: 170
+        50%: 439
+        90%: 499
+        99%: 783
+        99.9%: 982
+        99.99%: 16203
+        99.999%: 16963
+        max: 229617
+
 		
 3) Threads 4
 Overview:
-        Load time: 5539.59 milliseconds
-        Run time: 7672.8311 milliseconds
-        Throughput: 1303299.8750 ops/s
-        Failed lookups: 243270
+        Load time: 5527.51 milliseconds
+        Run time: 2120.1030 milliseconds
+        Throughput: 4716751.5000 ops/s
+        Failed lookups: 243135
         Failed inserts: 0
 PCM Metrics:
-        L3 misses: 64012540
-        DRAM Reads (bytes): 4269461952
-        DRAM Writes (bytes): 195441728
+        L3 misses: 63273993
+        DRAM Reads (bytes): 4213101888
+        DRAM Writes (bytes): 188372096
         NVM Reads (bytes): 0
         NVM Writes (bytes): 0
 Samples:
-        1293961
-        1306166
-        1304832
-        1305412
-        1305866
-        1303866
-        1304930
-        874967
+        4728917
+        4743053
+        528030
 Latencies (10000000 operations observed):
-        min: 174
-        50%: 433
-        90%: 492
-        99%: 779
-        99.9%: 878
-        99.99%: 4348
-        99.999%: 15860
-        max: 295065
+        min: 192
+        50%: 468
+        90%: 531
+        99%: 829
+        99.9%: 1062
+        99.99%: 16193
+        99.999%: 16870
+        max: 230502
+
 
 4) Threads 8
 Overview:
-        Load time: 5568.14 milliseconds
-        Run time: 7715.5195 milliseconds
-        Throughput: 1296089.0000 ops/s
-        Failed lookups: 243270
+        Load time: 5537.72 milliseconds
+        Run time: 1185.1444 milliseconds
+        Throughput: 8437790.0000 ops/s
+        Failed lookups: 243018
         Failed inserts: 0
 PCM Metrics:
-        L3 misses: 65667504
-        DRAM Reads (bytes): 4375666048
-        DRAM Writes (bytes): 197061760
+        L3 misses: 63071201
+        DRAM Reads (bytes): 4198065152
+        DRAM Writes (bytes): 188017728
         NVM Reads (bytes): 0
         NVM Writes (bytes): 0
 Samples:
-        1287325
-        1297463
-        1297587
-        1297995
-        1297751
-        1296961
-        1298212
-        926706
+        8450311
+        1549689
 Latencies (10000000 operations observed):
-        min: 180
-        50%: 438
-        90%: 497
-        99%: 782
-        99.9%: 880
-        99.99%: 4377
-        99.999%: 15957
-        max: 234114
+        min: 219
+        50%: 514
+        90%: 583
+        99%: 889
+        99.9%: 1123
+        99.99%: 16567
+        99.999%: 17374
+        max: 225922
 
 5) Threads 16
 Overview:
-        Load time: 5547.96 milliseconds
-        Run time: 7661.7607 milliseconds
-        Throughput: 1305183.0000 ops/s
-        Failed lookups: 243270
+        Load time: 5533.65 milliseconds
+        Run time: 855.3141 milliseconds
+        Throughput: 11691611.0000 ops/s
+        Failed lookups: 243138
         Failed inserts: 0
 PCM Metrics:
-        L3 misses: 64051225
-        DRAM Reads (bytes): 4272282240
-        DRAM Writes (bytes): 196004096
+        L3 misses: 61649675
+        DRAM Reads (bytes): 4107117184
+        DRAM Writes (bytes): 188423360
         NVM Reads (bytes): 0
         NVM Writes (bytes): 0
 Samples:
-        1292787
-        1307645
-        1306772
-        1307760
-        1307916
-        1307039
-        1306473
-        863608
+        10000000
 Latencies (10000000 operations observed):
-        min: 172
-        50%: 431
-        90%: 490
-        99%: 780
-        99.9%: 903
-        99.99%: 4323
-        99.999%: 15823
-        max: 229594
+        min: 218
+        50%: 640
+        90%: 743
+        99%: 1035
+        99.9%: 1426
+        99.99%: 7212
+        99.999%: 17658
+        max: 205595
 
 
 10% write 90% read workload
