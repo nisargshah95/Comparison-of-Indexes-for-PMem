@@ -3,3 +3,6 @@
 * dash has the highest throughput in all workloads.
 * In terms of P50 and P99 latencies, dash > lbtree > bztree.
 * bztree has unusually high tail (P99) latencies.
+BZTREE:-
+* Leaf Nodes should only have free space for insertions, to save space we shouldn't waste such space in internal nodes. Internal nodes support full copy replacement.
+* bwTree's indirection logic makes performance degrade
